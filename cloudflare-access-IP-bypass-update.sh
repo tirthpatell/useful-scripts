@@ -1,17 +1,17 @@
 #!/bin/bash
 
-echo "[$(date)]: Update Cloudflare DDNS started."
+echo "[$(date)]: Update Cloudflare access IP started."
 
-# Use dig to get the IP address of ddns.example.com
-IP=$(dig +short ddns.example.com) # Add the domain of your ddns to fetch your new IP
+# Use curl to get the IP address from icanhazip.com
+IP=$(curl icanhazip.com)
 
 # Validate that we got an IP address
 if [[ -z "$IP" ]]; then
-  echo "Failed to obtain a valid IP for ddns.example.com."
+  echo "Failed to obtain a valid IP from icanhazip.com."
   exit 1
 fi
 
-echo "Using IP: $IP for Cloudflare DDNS update."
+echo "Using IP: $IP for Cloudflare access IP update."
 
 # Cloudflare API credentials and endpoint
 # Zone ID can be fetched from your site dashboard in Cloudflare, and uuid for access group can be fetched from one.dash.cloudflare.com of the given site
@@ -46,4 +46,4 @@ RESPONSE=$(curl --request PUT \
 echo "Response from Cloudflare:"
 echo "$RESPONSE"
 
-echo "[$(date)]: Update Cloudflare DDNS finished."
+echo "[$(date)]: Update Cloudflare access IP finished."
